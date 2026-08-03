@@ -38,3 +38,28 @@ resource "azurerm_subnet" "subnet_backend" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
 }
+
+import {
+  to = azurerm_resource_group.rg
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod3-rg"
+}
+
+import {
+  to = azurerm_storage_account.sa
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod3-rg/providers/Microsoft.Storage/storageAccounts/cmazac643e5vsa"
+}
+
+import {
+  to = azurerm_virtual_network.vnet
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod3-rg/providers/Microsoft.Network/virtualNetworks/cmaz-ac643e5v-mod3-vnet"
+}
+
+import {
+  to = azurerm_subnet.subnet_frontend
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod3-rg/providers/Microsoft.Network/virtualNetworks/cmaz-ac643e5v-mod3-vnet/subnets/frontend"
+}
+
+import {
+  to = azurerm_subnet.subnet_backend
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod3-rg/providers/Microsoft.Network/virtualNetworks/cmaz-ac643e5v-mod3-vnet/subnets/backend"
+}

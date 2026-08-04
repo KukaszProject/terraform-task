@@ -182,3 +182,8 @@ import {
   to = azurerm_network_interface_security_group_association.nic_nsg
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkInterfaces/cmaz-ac643e5v-mod4-nic|/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg"
 }
+
+import {
+  to = azurerm_linux_virtual_machine.vm
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Compute/virtualMachines/cmaz-ac643e5v-mod4-vm"
+}

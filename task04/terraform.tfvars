@@ -1,5 +1,5 @@
 resource_group_name = "cmaz-ac643e5v-mod4-rg"
-location            = "West US 2"
+location            = "westus2"
 vnet_name           = "cmaz-ac643e5v-mod4-vnet"
 subnet_name         = "frontend"
 nic_name            = "cmaz-ac643e5v-mod4-nic"

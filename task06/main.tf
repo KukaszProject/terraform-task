@@ -32,3 +32,13 @@ module "webapp" {
   sql_connection_string = module.sql.sql_connection_string
   tags                  = var.tags
 }
+
+import {
+  to = module.sql.azurerm_key_vault_secret.sql_admin_name
+  id = "https://cmaz-ac643e5v-mod6-kv.vault.azure.net/secrets/sql-admin-name/dd9dbeb2f5bb4aa2ab20749d57306c3c"
+}
+
+import {
+  to = module.sql.azurerm_key_vault_secret.sql_admin_password
+  id = "https://cmaz-ac643e5v-mod6-kv.vault.azure.net/secrets/sql-admin-password/761bbf940b2b48ef940d9e916124b744"
+}

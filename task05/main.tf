@@ -58,16 +58,6 @@ module "traffic_manager" {
 }
 
 import {
-  to = module.app_service_plans["asp1"].azurerm_service_plan.asp
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-01/providers/Microsoft.Web/serverFarms/cmaz-ac643e5v-mod5-asp-01"
-}
-
-import {
-  to = module.app_service_plans["asp2"].azurerm_service_plan.asp
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-02/providers/Microsoft.Web/serverFarms/cmaz-ac643e5v-mod5-asp-02"
-}
-
-import {
   to = module.app_services["app1"].azurerm_windows_web_app.app
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-01/providers/Microsoft.Web/sites/cmaz-ac643e5v-mod5-app-01"
 }

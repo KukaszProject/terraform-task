@@ -96,13 +96,3 @@ import {
   to = module.traffic_manager.azurerm_traffic_manager_profile.tm
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-03/providers/Microsoft.Network/trafficManagerProfiles/cmaz-ac643e5v-mod5-traf"
 }
-
-import {
-  to = module.traffic_manager.azurerm_traffic_manager_azure_endpoint.endpoint["ep1"]
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-03/providers/Microsoft.Network/trafficManagerProfiles/cmaz-ac643e5v-mod5-traf/AzureEndpoints/endpoint-app-01"
-}
-
-import {
-  to = module.traffic_manager.azurerm_traffic_manager_azure_endpoint.endpoint["ep2"]
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-03/providers/Microsoft.Network/trafficManagerProfiles/cmaz-ac643e5v-mod5-traf/AzureEndpoints/endpoint-app-02"
-}

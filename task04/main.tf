@@ -111,12 +111,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Standard_LRS"
   }
 
-source_image_reference {
-  publisher = "Canonical"
-  offer     = "ubuntu-24_04-lts"
-  sku       = "server"
-  version   = "latest"
-}
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
+    version   = "latest"
+  }
 
   tags = var.tags
 

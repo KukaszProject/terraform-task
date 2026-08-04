@@ -3,7 +3,7 @@ variable "name" {
   description = "Name of the App Service Plan"
 }
 
-variable "resource_group_name" {
+variable "rg_name" {
   type        = string
   description = "Name of the Resource Group"
 }
@@ -13,7 +13,7 @@ variable "location" {
   description = "Azure region"
 }
 
-variable "sku_name" {
+variable "sku" {
   type        = string
   description = "SKU pricing tier"
 }

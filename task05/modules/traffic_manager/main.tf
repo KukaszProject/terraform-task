@@ -1,7 +1,7 @@
 resource "azurerm_traffic_manager_profile" "tm" {
   name                   = var.name
-  resource_group_name    = var.resource_group_name
-  traffic_routing_method = var.routing_method
+  resource_group_name    = var.rg_name
+  traffic_routing_method = "Performance"
 
   dns_config {
     relative_name = var.name
@@ -9,23 +9,17 @@ resource "azurerm_traffic_manager_profile" "tm" {
   }
 
   monitor_config {
-    protocol                     = "HTTP"
-    port                         = 80
-    path                         = "/"
-    interval_in_seconds          = 30
-    timeout_in_seconds           = 9
-    tolerated_number_of_failures = 3
+    protocol = "HTTP"
+    port     = 80
+    path     = "/"
   }
-
   tags = var.tags
 }
 
-resource "azurerm_traffic_manager_azure_endpoint" "endpoint" {
-  for_each = var.endpoints
-
-  name               = each.value.name
+resource "azurerm_traffic_manager_azure_endpoint" "endpoints" {
+  for_each           = var.endpoints
+  name               = each.key
   profile_id         = azurerm_traffic_manager_profile.tm.id
-  target_resource_id = each.value.target_resource_id
-  weight             = each.value.weight
-  priority           = each.value.priority
+  target_resource_id = each.value.app_id
+  weight             = 1
 }

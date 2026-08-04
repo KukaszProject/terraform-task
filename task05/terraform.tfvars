@@ -1,80 +1,21 @@
+tags = {
+  Creator = "lukasz_kielbasa@epam.com"
+}
+
+verification_agent_ip = "18.153.146.156"
+
 resource_groups = {
-  rg1 = {
-    name     = "cmaz-ac643e5v-mod5-rg-01"
-    location = "East US"
-  }
-  rg2 = {
-    name     = "cmaz-ac643e5v-mod5-rg-02"
-    location = "West US"
-  }
-  rg3 = {
-    name     = "cmaz-ac643e5v-mod5-rg-03"
-    location = "Central US"
-  }
+  rg1 = { name = "cmaz-ac643e5v-mod5-rg-01", location = "West Europe" }
+  rg2 = { name = "cmaz-ac643e5v-mod5-rg-02", location = "North Europe" }
+  rg3 = { name = "cmaz-ac643e5v-mod5-rg-03", location = "East US" }
 }
 
 app_service_plans = {
-  asp1 = {
-    name         = "cmaz-ac643e5v-mod5-asp-01"
-    rg_key       = "rg1"
-    sku_name     = "S1"
-    worker_count = 2
-  }
-  asp2 = {
-    name         = "cmaz-ac643e5v-mod5-asp-02"
-    rg_key       = "rg2"
-    sku_name     = "S1"
-    worker_count = 1
-  }
+  asp1 = { name = "cmaz-ac643e5v-mod5-asp-01", worker_count = 2, sku = "S1", rg_key = "rg1" }
+  asp2 = { name = "cmaz-ac643e5v-mod5-asp-02", worker_count = 1, sku = "S1", rg_key = "rg2" }
 }
 
 app_services = {
-  app1 = {
-    name    = "cmaz-ac643e5v-mod5-app-01"
-    rg_key  = "rg1"
-    asp_key = "asp1"
-    ip_restrictions = [
-      {
-        name       = "allow-ip"
-        ip_address = "18.153.146.156/32"
-        action     = "Allow"
-        priority   = 100
-      },
-      {
-        name        = "allow-tm"
-        service_tag = "AzureTrafficManager"
-        action      = "Allow"
-        priority    = 110
-      }
-    ]
-  }
-  app2 = {
-    name    = "cmaz-ac643e5v-mod5-app-02"
-    rg_key  = "rg2"
-    asp_key = "asp2"
-    ip_restrictions = [
-      {
-        name       = "allow-ip"
-        ip_address = "18.153.146.156/32"
-        action     = "Allow"
-        priority   = 100
-      },
-      {
-        name        = "allow-tm"
-        service_tag = "AzureTrafficManager"
-        action      = "Allow"
-        priority    = 110
-      }
-    ]
-  }
-}
-
-traffic_manager = {
-  name           = "cmaz-ac643e5v-mod5-traf"
-  rg_key         = "rg3"
-  routing_method = "Performance"
-}
-
-tags = {
-  Creator = "lukasz_kielbasa@epam.com"
+  app1 = { name = "cmaz-ac643e5v-mod5-app-01", asp_key = "asp1", rg_key = "rg1" }
+  app2 = { name = "cmaz-ac643e5v-mod5-app-02", asp_key = "asp2", rg_key = "rg2" }
 }

@@ -10,7 +10,7 @@ variable "app_service_plans" {
   type = map(object({
     name         = string
     rg_key       = string
-    sku_name     = string
+    sku     = string
     worker_count = number
   }))
   description = "A map of App Service Plan configurations including SKU and worker instances."
@@ -21,24 +21,13 @@ variable "app_services" {
     name    = string
     rg_key  = string
     asp_key = string
-    ip_restrictions = list(object({
-      name        = string
-      ip_address  = optional(string)
-      service_tag = optional(string)
-      action      = string
-      priority    = number
-    }))
   }))
   description = "A map of Windows Web Apps and their respective IP access restriction security rules."
 }
 
-variable "traffic_manager" {
-  type = object({
-    name           = string
-    rg_key         = string
-    routing_method = string
-  })
-  description = "Configuration settings for the Azure Traffic Manager profile and routing method."
+variable "verification_agent_ip" {
+  type      = string
+  description = "Verification agent IP."
 }
 
 variable "tags" {

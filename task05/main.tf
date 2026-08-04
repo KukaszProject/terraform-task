@@ -1,73 +1,56 @@
-# 1. Resource Groups
-module "resource_groups" {
-  for_each = var.resource_groups
+module "rgs" {
   source   = "./modules/resource_group"
+  for_each = var.resource_groups
 
   name     = each.value.name
   location = each.value.location
   tags     = var.tags
 }
 
-# 2. App Service Plans
-module "app_service_plans" {
-  for_each = var.app_service_plans
+module "asps" {
   source   = "./modules/app_service_plan"
+  for_each = var.app_service_plans
 
-  name                = each.value.name
-  resource_group_name = module.resource_groups[each.value.rg_key].name
-  location            = module.resource_groups[each.value.rg_key].location
-  sku_name            = each.value.sku_name
-  worker_count        = each.value.worker_count
-  tags                = var.tags
+  name         = each.value.name
+  location     = module.rgs[each.value.rg_key].location
+  rg_name      = module.rgs[each.value.rg_key].name
+  sku          = each.value.sku
+  worker_count = each.value.worker_count
+  tags         = var.tags
 }
 
-# 3. Windows Web Apps
-module "app_services" {
-  for_each = var.app_services
+module "apps" {
   source   = "./modules/app_service"
+  for_each = var.app_services
 
-  name                = each.value.name
-  resource_group_name = module.resource_groups[each.value.rg_key].name
-  location            = module.resource_groups[each.value.rg_key].location
-  service_plan_id     = module.app_service_plans[each.value.asp_key].id
-  ip_restrictions     = each.value.ip_restrictions
-  tags                = var.tags
+  name     = each.value.name
+  location = module.rgs[each.value.rg_key].location
+  rg_name  = module.rgs[each.value.rg_key].name
+  asp_id   = module.asps[each.value.asp_key].id
+  tags     = var.tags
+
+  ip_restrictions = [
+    {
+      name       = "allow-ip"
+      ip_address = "${var.verification_agent_ip}/32"
+      priority   = 100
+    },
+    {
+      name        = "allow-tm"
+      service_tag = "AzureTrafficManager"
+      priority    = 110
+    }
+  ]
 }
 
-# 4. Traffic Manager Profile with Endpoints
 module "traffic_manager" {
-  source = "./modules/traffic_manager"
-
-  name                = var.traffic_manager.name
-  resource_group_name = module.resource_groups[var.traffic_manager.rg_key].name
-  routing_method      = var.traffic_manager.routing_method
-  tags                = var.tags
+  source  = "./modules/traffic_manager"
+  name    = "cmaz-ac643e5v-mod5-traf"
+  rg_name = module.rgs["rg3"].name
+  tags    = var.tags
 
   endpoints = {
-    ep1 = {
-      name               = "endpoint-app-01"
-      target_resource_id = module.app_services["app1"].id
-      priority           = 1
-    }
-    ep2 = {
-      name               = "endpoint-app-02"
-      target_resource_id = module.app_services["app2"].id
-      priority           = 2
-    }
+    ep1 = { app_id = module.apps["app1"].id }
+    ep2 = { app_id = module.apps["app2"].id }
   }
-}
-
-import {
-  to = module.app_services["app1"].azurerm_windows_web_app.app
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-01/providers/Microsoft.Web/sites/cmaz-ac643e5v-mod5-app-01"
-}
-
-import {
-  to = module.app_services["app2"].azurerm_windows_web_app.app
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-02/providers/Microsoft.Web/sites/cmaz-ac643e5v-mod5-app-02"
-}
-
-import {
-  to = module.traffic_manager.azurerm_traffic_manager_profile.tm
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod5-rg-03/providers/Microsoft.Network/trafficManagerProfiles/cmaz-ac643e5v-mod5-traf"
 }

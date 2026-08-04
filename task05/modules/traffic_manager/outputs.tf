@@ -1,3 +1,1 @@
-output "fqdn" {
-  value = azurerm_traffic_manager_profile.tm.fqdn
-}
+output "fqdn" { value = azurerm_traffic_manager_profile.tm.fqdn }

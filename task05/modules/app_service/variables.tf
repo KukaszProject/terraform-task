@@ -3,7 +3,7 @@ variable "name" {
   description = "Name of the Windows Web App"
 }
 
-variable "resource_group_name" {
+variable "rg_name" {
   type        = string
   description = "Name of the Resource Group"
 }
@@ -13,7 +13,7 @@ variable "location" {
   description = "Azure region"
 }
 
-variable "service_plan_id" {
+variable "asp_id" {
   type        = string
   description = "ID of the App Service Plan"
 }
@@ -23,7 +23,6 @@ variable "ip_restrictions" {
     name        = string
     ip_address  = optional(string)
     service_tag = optional(string)
-    action      = string
     priority    = number
   }))
   description = "List of IP restrictions with dynamic rules"

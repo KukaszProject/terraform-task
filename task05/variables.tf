@@ -1,5 +1,5 @@
 variable "resource_groups" {
-  type        = map(object({
+  type = map(object({
     name     = string
     location = string
   }))
@@ -7,7 +7,7 @@ variable "resource_groups" {
 }
 
 variable "app_service_plans" {
-  type        = map(object({
+  type = map(object({
     name         = string
     rg_key       = string
     sku_name     = string
@@ -17,7 +17,7 @@ variable "app_service_plans" {
 }
 
 variable "app_services" {
-  type        = map(object({
+  type = map(object({
     name    = string
     rg_key  = string
     asp_key = string
@@ -33,7 +33,7 @@ variable "app_services" {
 }
 
 variable "traffic_manager" {
-  type        = object({
+  type = object({
     name           = string
     rg_key         = string
     routing_method = string

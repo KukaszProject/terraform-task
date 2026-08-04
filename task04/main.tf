@@ -137,3 +137,48 @@ resource "azurerm_linux_virtual_machine" "vm" {
     ]
   }
 }
+
+import {
+  to = azurerm_resource_group.rg
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg"
+}
+
+import {
+  to = azurerm_virtual_network.vnet
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/virtualNetworks/cmaz-ac643e5v-mod4-vnet"
+}
+
+import {
+  to = azurerm_subnet.subnet
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/virtualNetworks/cmaz-ac643e5v-mod4-vnet/subnets/frontend"
+}
+
+import {
+  to = azurerm_public_ip.pip
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/publicIPAddresses/cmaz-ac643e5v-mod4-pip"
+}
+
+import {
+  to = azurerm_network_security_group.nsg
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg"
+}
+
+import {
+  to = azurerm_network_security_rule.http
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg/securityRules/AllowHTTP"
+}
+
+import {
+  to = azurerm_network_security_rule.ssh
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg/securityRules/AllowSSH"
+}
+
+import {
+  to = azurerm_network_interface.nic
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkInterfaces/cmaz-ac643e5v-mod4-nic"
+}
+
+import {
+  to = azurerm_network_interface_security_group_association.nic_nsg
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkInterfaces/cmaz-ac643e5v-mod4-nic|/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg"
+}

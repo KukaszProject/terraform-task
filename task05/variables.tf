@@ -10,7 +10,7 @@ variable "app_service_plans" {
   type = map(object({
     name         = string
     rg_key       = string
-    sku     = string
+    sku          = string
     worker_count = number
   }))
   description = "A map of App Service Plan configurations including SKU and worker instances."
@@ -26,7 +26,7 @@ variable "app_services" {
 }
 
 variable "verification_agent_ip" {
-  type      = string
+  type        = string
   description = "Verification agent IP."
 }
 

@@ -10,7 +10,7 @@ variable "rg_name" {
 
 variable "endpoints" {
   type = map(object({
-    app_id    = string
+    app_id = string
   }))
   description = "Map of Traffic Manager Azure endpoints using for_each"
 }

@@ -11,6 +11,7 @@ domain_name_label   = "cmaz-ac643e5v-mod4-nginx"
 vm_name             = "cmaz-ac643e5v-mod4-vm"
 vm_os_version       = "server"
 vm_SKU              = "Standard_B2s_v2"
+nic_ip_config_name  = "internal"
 
 tags = {
   Creator = "lukasz_kielbasa@epam.com"

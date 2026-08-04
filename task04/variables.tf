@@ -80,3 +80,9 @@ variable "tags" {
   type        = map(string)
   description = "Tags applied to resources"
 }
+
+variable "nic_ip_config_name" {
+  type        = string
+  description = "Name of the network interface IP configuration"
+  default     = "internal"
+}

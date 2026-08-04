@@ -19,3 +19,5 @@ variable "tags" {
   type        = map(string)
   description = "Tags applied to Traffic Manager profile"
 }
+
+variable "routing_method" { type = string }

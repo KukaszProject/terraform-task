@@ -19,3 +19,8 @@ app_services = {
   app1 = { name = "cmaz-ac643e5v-mod5-app-01", asp_key = "asp1", rg_key = "rg1" }
   app2 = { name = "cmaz-ac643e5v-mod5-app-02", asp_key = "asp2", rg_key = "rg2" }
 }
+
+ip_rule_name      = "allow-ip"
+tm_rule_name      = "allow-tm"
+tm_profile_name   = "cmaz-ac643e5v-mod5-traf"
+tm_routing_method = "Performance"

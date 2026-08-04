@@ -34,3 +34,19 @@ variable "tags" {
   type        = map(string)
   description = "A map of tags applied across all deployed Azure resources."
 }
+
+variable "ip_rule_name" {
+  type = string
+}
+
+variable "tm_rule_name" {
+  type = string
+}
+
+variable "tm_profile_name" {
+  type = string
+}
+
+variable "tm_routing_method" {
+  type = string
+}

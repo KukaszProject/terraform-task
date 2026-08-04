@@ -159,11 +159,6 @@ import {
 }
 
 import {
-  to = azurerm_network_security_group.nsg
-  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkSecurityGroups/cmaz-ac643e5v-mod4-nsg"
-}
-
-import {
   to = azurerm_network_interface.nic
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmaz-ac643e5v-mod4-rg/providers/Microsoft.Network/networkInterfaces/cmaz-ac643e5v-mod4-nic"
 }

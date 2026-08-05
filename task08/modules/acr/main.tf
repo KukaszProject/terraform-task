@@ -3,29 +3,34 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = var.rg_name
   location            = var.location
   sku                 = var.sku
-  admin_enabled       = true
-  tags                = var.tags
+
+  # ACI requires admin credentials to pull the image using image_registry_credential
+  admin_enabled = true
+
+  tags = var.tags
 }
 
-resource "azurerm_container_registry_task" "build_task" {
+resource "azurerm_container_registry_task" "acr_task" {
   name                  = "${var.name}-task"
   container_registry_id = azurerm_container_registry.acr.id
 
   platform {
-    os = "Linux"
+    os           = "Linux"
+    architecture = "amd64"
   }
 
   docker_step {
-    dockerfile_path      = "task08/application/Dockerfile"
+    # The URL to your Git repository (e.g., https://github.com/youruser/yourrepo.git#main)
     context_path         = var.git_repo_url
     context_access_token = var.git_pat
-    image_names          = ["${var.image_name}:latest"]
-  }
 
-  # Integrated Schedule Trigger
-  timer_trigger {
-    name     = "daily-build"
-    schedule = "0 0 * * *"
-    enabled  = true
+    # Path to the Dockerfile relative to the repository root
+    dockerfile_path = "task08/application/Dockerfile"
+
+    image_names = ["${var.image_name}:latest"]
   }
+}
+
+resource "azurerm_container_registry_task_schedule_run_now" "acr_task_run" {
+  container_registry_task_id = azurerm_container_registry_task.acr_task.id
 }

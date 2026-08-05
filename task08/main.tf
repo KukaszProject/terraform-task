@@ -42,17 +42,16 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "./modules/aks"
-  name                = local.aks_name
-  location            = azurerm_resource_group.rg.location
-  rg_name             = azurerm_resource_group.rg.name
-  node_pool_name      = "system"
-  node_pool_count     = 1
-  node_pool_size      = "Standard_D2ads_v6"
-  node_pool_disk_type = "Ephemeral"
-  acr_id              = module.acr.acr_id
-  key_vault_id        = module.keyvault.kv_id
-  tags                = local.common_tags
+  source                               = "./modules/aks"
+  name                                 = local.aks_name
+  location                             = azurerm_resource_group.rg.location
+  rg_name                              = azurerm_resource_group.rg.name
+  acr_id                               = module.acr.acr_id
+  key_vault_id                         = module.keyvault.kv_id
+  tags                                 = local.common_tags
+  default_node_pool_name               = "system"
+  default_node_pool_instance_count     = 1
+  default_node_pool_instance_node_size = "Standard_D2ads_v6"
 }
 
 module "aci" {

@@ -10,7 +10,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count      = var.default_node_pool_instance_count
     vm_size         = var.default_node_pool_instance_node_size
     os_disk_type    = "Ephemeral"
-    os_disk_size_gb = 30
+    os_disk_size_gb = 30 # Required to fit inside the VM's temp storage cache
   }
 
   identity {

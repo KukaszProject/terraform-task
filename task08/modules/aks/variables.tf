@@ -10,22 +10,7 @@ variable "rg_name" {
   type        = string
   description = "Name of the Resource Group"
 }
-variable "node_pool_name" {
-  type        = string
-  description = "Name of the default node pool"
-}
-variable "node_pool_count" {
-  type        = number
-  description = "Number of nodes in the default node pool"
-}
-variable "node_pool_size" {
-  type        = string
-  description = "VM size for the default node pool"
-}
-variable "node_pool_disk_type" {
-  type        = string
-  description = "OS disk type for the default node pool"
-}
+
 variable "acr_id" {
   type        = string
   description = "ID of the Azure Container Registry to pull images from"
@@ -37,4 +22,19 @@ variable "key_vault_id" {
 variable "tags" {
   type        = map(string)
   description = "Tags applied to the AKS cluster"
+}
+
+variable "default_node_pool_name" {
+  type        = string
+  description = "The name of the default node pool for the AKS cluster"
+}
+
+variable "default_node_pool_instance_count" {
+  type        = number
+  description = "The number of nodes in the default node pool"
+}
+
+variable "default_node_pool_instance_node_size" {
+  type        = string
+  description = "The VM size of the nodes in the default node pool"
 }

@@ -1,12 +1,12 @@
 # Import Blocks
 import {
   to = azurerm_resource_group.rg
-  id = var.rg_id
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmtr-ac643e5v-mod7-rg"
 }
 
 import {
   to = azurerm_storage_account.sa
-  id = var.sa_id
+  id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmtr-ac643e5v-mod7-rg/providers/Microsoft.Storage/storageAccounts/cmtrac643e5vmod7sa"
 }
 
 # Resource Definitions for Imported Resources

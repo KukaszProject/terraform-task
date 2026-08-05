@@ -21,12 +21,11 @@ resource "azurerm_container_registry_task" "build_task" {
     context_access_token = var.git_pat
     image_names          = ["${var.image_name}:latest"]
   }
-}
 
-resource "azurerm_container_registry_task_schedule" "schedule" {
-  container_registry_task_id = azurerm_container_registry_task.build_task.id
-  schedule {
-    schedule_name = "daily-build"
-    schedule_cron = "0 0 * * *"
+  # Integrated Schedule Trigger
+  timer_trigger {
+    name     = "daily-build"
+    schedule = "0 0 * * *"
+    enabled  = true
   }
 }

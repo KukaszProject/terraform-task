@@ -1,3 +1,14 @@
+# Import Blocks
+import {
+  to = azurerm_resource_group.rg
+  id = var.rg_id
+}
+
+import {
+  to = azurerm_storage_account.sa
+  id = var.sa_id
+}
+
 # Resource Definitions for Imported Resources
 resource "azurerm_resource_group" "rg" {
   name     = var.rg_name
@@ -5,29 +16,17 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_storage_account" "sa" {
-  name                     = var.sa_name
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  
+  name                = var.sa_name
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  # Assuming Standard_LRS for pre-created. The import state will reconcile this.
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
+  # Required settings
   allow_nested_items_to_be_public  = false
   cross_tenant_replication_enabled = false
-}
-
-resource "azurerm_storage_container" "container" {
-  name                  = "content"
-  storage_account_name  = azurerm_storage_account.sa.name
-  container_access_type = "private"
-}
-
-resource "azurerm_storage_blob" "blob" {
-  name                   = "blob.txt"
-  storage_account_name   = azurerm_storage_account.sa.name
-  storage_container_name = azurerm_storage_container.container.name
-  type                   = "Block"
-  source_content         = "Hello World from CDN!"
 }
 
 # Call the CDN Module

@@ -4,12 +4,14 @@ variable "name_prefix" {
 }
 
 variable "location" {
-  type    = string
-  default = "East US"
+  type        = string
+  description = "Azure region where resources will be deployed"
+  default     = "East US"
 }
 
 variable "student_email" {
-  type = string
+  type        = string
+  description = "Student email used for tagging resources"
 }
 
 variable "git_repo_url" {
@@ -20,20 +22,23 @@ variable "git_repo_url" {
 variable "git_pat" {
   type        = string
   sensitive   = true
-  description = "Personal Access Token for the Git repository"
+  description = "Personal Access Token for the Git repository to pull application code"
 }
 
 variable "image_name" {
-  type    = string
-  default = "redis-flask-app"
+  type        = string
+  description = "Name of the Docker image to build and deploy"
+  default     = "redis-flask-app"
 }
 
 variable "redis_hostname_secret" {
-  type    = string
-  default = "redis-hostname"
+  type        = string
+  description = "Key Vault secret name for the Redis hostname"
+  default     = "redis-hostname"
 }
 
 variable "redis_primary_key_secret" {
-  type    = string
-  default = "redis-primary-key"
+  type        = string
+  description = "Key Vault secret name for the Redis primary key"
+  default     = "redis-primary-key"
 }

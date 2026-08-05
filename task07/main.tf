@@ -1,4 +1,3 @@
-# Import Blocks
 import {
   to = azurerm_resource_group.rg
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmtr-ac643e5v-mod7-rg"
@@ -9,27 +8,30 @@ import {
   id = "/subscriptions/fe7f3f41-b0fa-47c8-84f7-d5e8ae76595f/resourceGroups/cmtr-ac643e5v-mod7-rg/providers/Microsoft.Storage/storageAccounts/cmtrac643e5vmod7sa"
 }
 
-# Resource Definitions for Imported Resources
 resource "azurerm_resource_group" "rg" {
   name     = var.rg_name
   location = var.location
+
+  tags = {
+    rg_reference = var.rg_id
+  }
 }
 
 resource "azurerm_storage_account" "sa" {
-  name                = var.sa_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-
-  # Assuming Standard_LRS for pre-created. The import state will reconcile this.
+  name                     = var.sa_name
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  # Required settings
   allow_nested_items_to_be_public  = false
   cross_tenant_replication_enabled = false
+
+  tags = {
+    sa_reference = var.sa_id
+  }
 }
 
-# Call the CDN Module
 module "cdn" {
   source = "./modules/cdn"
 

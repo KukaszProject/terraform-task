@@ -27,16 +27,16 @@ provider "azurerm" {
 }
 
 provider "kubectl" {
-  host                   = module.aks.host == "" ? "https://127.0.0.1:6443" : module.aks.host
-  client_certificate     = module.aks.client_certificate == "" ? "" : base64decode(module.aks.client_certificate)
-  client_key             = module.aks.client_key == "" ? "" : base64decode(module.aks.client_key)
-  cluster_ca_certificate = module.aks.cluster_ca_certificate == "" ? "" : base64decode(module.aks.cluster_ca_certificate)
+  host                   = coalesce(module.aks.host, "https://127.0.0.1:6443")
+  client_certificate     = base64decode(coalesce(module.aks.client_certificate, "ZHVtbXk="))
+  client_key             = base64decode(coalesce(module.aks.client_key, "ZHVtbXk="))
+  cluster_ca_certificate = base64decode(coalesce(module.aks.cluster_ca_certificate, "ZHVtbXk="))
   load_config_file       = false
 }
 
 provider "kubernetes" {
-  host                   = module.aks.host == "" ? "https://127.0.0.1:6443" : module.aks.host
-  client_certificate     = module.aks.client_certificate == "" ? "" : base64decode(module.aks.client_certificate)
-  client_key             = module.aks.client_key == "" ? "" : base64decode(module.aks.client_key)
-  cluster_ca_certificate = module.aks.cluster_ca_certificate == "" ? "" : base64decode(module.aks.cluster_ca_certificate)
+  host                   = coalesce(module.aks.host, "https://127.0.0.1:6443")
+  client_certificate     = base64decode(coalesce(module.aks.client_certificate, "ZHVtbXk="))
+  client_key             = base64decode(coalesce(module.aks.client_key, "ZHVtbXk="))
+  cluster_ca_certificate = base64decode(coalesce(module.aks.cluster_ca_certificate, "ZHVtbXk="))
 }

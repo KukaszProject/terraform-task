@@ -1,20 +1,20 @@
 output "host" {
-  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].host, "")
+  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].host, null)
   sensitive = true
 }
 
 output "client_certificate" {
-  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate, "")
+  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate, null)
   sensitive = true
 }
 
 output "client_key" {
-  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].client_key, "")
+  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].client_key, null)
   sensitive = true
 }
 
 output "cluster_ca_certificate" {
-  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate, "")
+  value     = try(azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate, null)
   sensitive = true
 }
 

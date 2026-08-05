@@ -25,18 +25,27 @@ provider "azurerm" {
     }
   }
 }
+locals {
+  # coalesce() ignores nulls and empty strings, securely falling back to localhost during plan
+  aks_host = coalesce(try(module.aks.host, ""), "https://127.0.0.1:6443")
+
+  # try() catches decode errors if the certificate values are null before creation
+  aks_client_crt = try(base64decode(module.aks.client_certificate), "")
+  aks_client_key = try(base64decode(module.aks.client_key), "")
+  aks_cluster_ca = try(base64decode(module.aks.cluster_ca_certificate), "")
+}
 
 provider "kubectl" {
-  host                   = coalesce(module.aks.host, "https://127.0.0.1:6443")
-  client_certificate     = base64decode(coalesce(module.aks.client_certificate, "ZHVtbXk="))
-  client_key             = base64decode(coalesce(module.aks.client_key, "ZHVtbXk="))
-  cluster_ca_certificate = base64decode(coalesce(module.aks.cluster_ca_certificate, "ZHVtbXk="))
+  host                   = local.aks_host
+  client_certificate     = local.aks_client_crt
+  client_key             = local.aks_client_key
+  cluster_ca_certificate = local.aks_cluster_ca
   load_config_file       = false
 }
 
 provider "kubernetes" {
-  host                   = coalesce(module.aks.host, "https://127.0.0.1:6443")
-  client_certificate     = base64decode(coalesce(module.aks.client_certificate, "ZHVtbXk="))
-  client_key             = base64decode(coalesce(module.aks.client_key, "ZHVtbXk="))
-  cluster_ca_certificate = base64decode(coalesce(module.aks.cluster_ca_certificate, "ZHVtbXk="))
+  host                   = local.aks_host
+  client_certificate     = local.aks_client_crt
+  client_key             = local.aks_client_key
+  cluster_ca_certificate = local.aks_cluster_ca
 }

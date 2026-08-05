@@ -1,5 +1,5 @@
 name_prefix   = "cmtr-ac643e5v-mod8"
 location      = "East US"
-student_email = "student@example.com"
+student_email = "lukasz_kielbasa@epam.com"
 git_repo_url  = "https://github.com/your-username/your-repo#main"
-image_name    = "redis-flask-app"
+image_name    = "cmtr-ac643e5v-mod8-app"

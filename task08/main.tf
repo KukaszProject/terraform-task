@@ -18,14 +18,14 @@ module "redis" {
   name                    = local.redis_name
   location                = azurerm_resource_group.rg.location
   rg_name                 = azurerm_resource_group.rg.name
-  capacity                = 0
+  capacity                = 2
   family                  = "C"
   sku                     = "Basic"
   key_vault_id            = module.keyvault.kv_id
   secret_name_hostname    = var.redis_hostname_secret
   secret_name_primary_key = var.redis_primary_key_secret
   tags                    = local.common_tags
-
+  
   depends_on = [module.keyvault]
 }
 
@@ -34,7 +34,7 @@ module "acr" {
   name         = local.acr_name
   location     = azurerm_resource_group.rg.location
   rg_name      = azurerm_resource_group.rg.name
-  sku          = "Standard"
+  sku          = "Basic"
   git_repo_url = var.git_repo_url
   git_pat      = var.git_pat
   image_name   = var.image_name
@@ -46,10 +46,10 @@ module "aks" {
   name                = local.aks_name
   location            = azurerm_resource_group.rg.location
   rg_name             = azurerm_resource_group.rg.name
-  node_pool_name      = "default"
+  node_pool_name      = "system"
   node_pool_count     = 1
-  node_pool_size      = "Standard_B2s"
-  node_pool_disk_type = "Managed"
+  node_pool_size      = "Standard_D2ads_v6"
+  node_pool_disk_type = "Ephemeral"
   acr_id              = module.acr.acr_id
   key_vault_id        = module.keyvault.kv_id
   tags                = local.common_tags
@@ -67,8 +67,8 @@ module "aci" {
   redis_hostname     = module.redis.redis_hostname
   redis_primary_key  = module.redis.redis_primary_key
   tags               = local.common_tags
-
-  depends_on = [module.acr]
+  
+  depends_on = [module.acr] 
 }
 
 # --- K8S Manifests via Kubectl Provider ---
@@ -81,7 +81,7 @@ resource "kubectl_manifest" "secret_provider" {
     redis_url_secret_name      = var.redis_hostname_secret
     redis_password_secret_name = var.redis_primary_key_secret
   })
-
+  
   depends_on = [module.aks]
 }
 
@@ -98,7 +98,7 @@ resource "kubectl_manifest" "deployment" {
       value = "1"
     }
   }
-
+  
   depends_on = [kubectl_manifest.secret_provider]
 }
 
@@ -112,7 +112,7 @@ resource "kubectl_manifest" "service" {
       value_type = "regex"
     }
   }
-
+  
   depends_on = [kubectl_manifest.deployment]
 }
 

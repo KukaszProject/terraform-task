@@ -26,10 +26,10 @@ provider "azurerm" {
   }
 }
 locals {
-  # coalesce() ignores nulls and empty strings, securely falling back to localhost during plan
-  aks_host = coalesce(try(module.aks.host, ""), "https://127.0.0.1:6443")
+  # Remove the coalesce() and 127.0.0.1 fallback
+  aks_host = module.aks.host
 
-  # try() catches decode errors if the certificate values are null before creation
+  # Keep try() to safely handle base64 decoding during the plan phase
   aks_client_crt = try(base64decode(module.aks.client_certificate), "")
   aks_client_key = try(base64decode(module.aks.client_key), "")
   aks_cluster_ca = try(base64decode(module.aks.cluster_ca_certificate), "")

@@ -10,7 +10,7 @@ resource "azurerm_container_registry" "acr" {
 resource "azurerm_container_registry_task" "build_task" {
   name                  = "${var.name}-task"
   container_registry_id = azurerm_container_registry.acr.id
-  
+
   platform {
     os = "Linux"
   }

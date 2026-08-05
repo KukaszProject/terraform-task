@@ -25,7 +25,7 @@ module "redis" {
   secret_name_hostname    = var.redis_hostname_secret
   secret_name_primary_key = var.redis_primary_key_secret
   tags                    = local.common_tags
-  
+
   depends_on = [module.keyvault]
 }
 
@@ -67,8 +67,8 @@ module "aci" {
   redis_hostname     = module.redis.redis_hostname
   redis_primary_key  = module.redis.redis_primary_key
   tags               = local.common_tags
-  
-  depends_on = [module.acr] 
+
+  depends_on = [module.acr]
 }
 
 # --- K8S Manifests via Kubectl Provider ---
@@ -81,7 +81,7 @@ resource "kubectl_manifest" "secret_provider" {
     redis_url_secret_name      = var.redis_hostname_secret
     redis_password_secret_name = var.redis_primary_key_secret
   })
-  
+
   depends_on = [module.aks]
 }
 
@@ -98,7 +98,7 @@ resource "kubectl_manifest" "deployment" {
       value = "1"
     }
   }
-  
+
   depends_on = [kubectl_manifest.secret_provider]
 }
 
@@ -112,7 +112,7 @@ resource "kubectl_manifest" "service" {
       value_type = "regex"
     }
   }
-  
+
   depends_on = [kubectl_manifest.deployment]
 }
 

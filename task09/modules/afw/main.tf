@@ -39,7 +39,6 @@ resource "azurerm_route_table" "aks" {
   name                          = local.route_table_name
   location                      = var.location
   resource_group_name           = var.rg_name
-  disable_bgp_route_propagation = true
 
   route {
     name                   = "hop-to-azure-firewall"

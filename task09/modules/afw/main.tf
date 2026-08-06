@@ -46,6 +46,12 @@ resource "azurerm_route_table" "aks" {
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.this.ip_configuration[0].private_ip_address
   }
+
+  route {
+    name           = "fw-pip-bypass"
+    address_prefix = "${azurerm_public_ip.firewall.ip_address}/32"
+    next_hop_type  = "Internet"
+  }
 }
 
 # 5. Data Source to reference existing AKS Subnet

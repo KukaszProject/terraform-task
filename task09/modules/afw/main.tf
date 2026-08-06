@@ -36,9 +36,9 @@ resource "azurerm_firewall" "this" {
 
 # 4. Route Table with default route (0.0.0.0/0 -> Azure Firewall)
 resource "azurerm_route_table" "aks" {
-  name                          = local.route_table_name
-  location                      = var.location
-  resource_group_name           = var.rg_name
+  name                = local.route_table_name
+  location            = var.location
+  resource_group_name = var.rg_name
 
   route {
     name                   = "hop-to-azure-firewall"
@@ -69,12 +69,15 @@ resource "azurerm_firewall_network_rule_collection" "aks" {
   priority            = 100
   action              = "Allow"
 
-  rule {
-    name                  = "allow-aks-services"
-    source_addresses      = ["*"]
-    destination_addresses = ["*"]
-    destination_ports     = ["53", "123", "443", "9000", "1194"]
-    protocols             = ["TCP", "UDP"]
+  dynamic "rule" {
+    for_each = local.net_rules
+    content {
+      name                  = rule.value.name
+      protocols             = rule.value.protocols
+      source_addresses      = ["*"]
+      destination_addresses = ["*"]
+      destination_ports     = rule.value.ports
+    }
   }
 }
 
@@ -91,7 +94,7 @@ resource "azurerm_firewall_application_rule_collection" "aks" {
     source_addresses = ["*"]
 
     target_fqdns = [
-      "*.hcp.${var.location}.azmk8s.io",
+      "*.hcp.${replace(lower(var.location), " ", "")}.azmk8s.io",
       "mcr.microsoft.com",
       "*.data.mcr.microsoft.com",
       "management.azure.com",

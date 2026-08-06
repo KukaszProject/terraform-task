@@ -1,23 +1,23 @@
 locals {
-  # Naming convention: ${var.unique_id}-<abbreviation>
-  afw_name = lower("${var.unique_id}-afw")
-  pip_name = lower("${var.unique_id}-pip")
-
-  # Resolving your missing local references:
+  # Naming convention variables (keep your existing ones here)
+  afw_name         = lower("${var.unique_id}-afw")
+  pip_name         = lower("${var.unique_id}-pip")
   route_table_name = lower("${var.unique_id}-rt")
   net_rc_name      = lower("${var.unique_id}-fwrcn")
   app_rc_name      = lower("${var.unique_id}-fwrca")
   nat_rc_name      = lower("${var.unique_id}-fwrcnat")
 
-  # Rule definitions for the dynamic block
-  network_rules = {
-    aks_udp = {
-      protocols = ["UDP"]
-      ports     = ["1194", "123", "53"]
-    }
+  # Add this map for the loop
+  net_rules = {
     aks_tcp = {
+      name      = "allow-aks-tcp"
       protocols = ["TCP"]
-      ports     = ["443", "9000", "80"]
+      ports     = ["80", "443", "9000"]
+    }
+    aks_udp = {
+      name      = "allow-aks-udp"
+      protocols = ["UDP"]
+      ports     = ["53", "123", "1194"]
     }
   }
 }
